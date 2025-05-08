@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightWay - Stream Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .nav-icon {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .hidden-navigation {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            background-color: rgba(106, 184, 214, 0.9);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .hidden-navigation.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hidden-navigation ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hidden-navigation ul li {
+            margin: 10px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .hidden-navigation ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .hidden-navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hidden-navigation ul li a:hover {
+            background-color: #34c6eb;
+            color: white;
+        }
+
+        header {
+            background-color: #75d8e3; /* Deep purple */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 20px 0;
+        }
+
+        section {
+            margin: 20px auto;
+            width: 80%;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .stream-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stream-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light gradient background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            flex: 1 1 30%; /* Responsive flex layout */
+            min-width: 250px; /* Minimum width */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stream-box:hover {
+            transform: scale(1.05); /* Scale up on hover */
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+        }
+
+        label, select {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        select {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #34c6eb; /* Button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background-color: #29a5d5; /* Darker shade on hover */
+        }
+
+        .recommendation {
+            background-color: #f0f8ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .college-list {
+            list-style-type: none;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        .college-list li {
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #8bd0e0; /* Light blue */
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .college-list li:hover {
+            background-color: #0a9cb0; /* Darker shade on hover */
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #2e2e2e; /* Dark footer */
+            color: white;
+            
+        }
+
+    </style>
+</head>
+<body  style="background: linear-gradient(135deg, #6a11cb, #25fcf5);">
+
+    <header>
+        <h1>12TH PASS</h1>
+        <p>Your Guide to a Bright Future</p>
+        <div class="nav-icon" onclick="toggleNav()">&#9776;</div>
+        <nav id="hiddenNav" class="hidden-navigation">
+            <ul>
+                <li ><a href="career.php?path=home-pass">Home</a></li>
+                <li><a href="career.php?path=10th-pass">10TH PASS</a></li>
+                <li><a href="career.php?path=12th-pass">12TH PASS</a></li>
+                <li><a href="career.php?path=post-graduation">Post Graduation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Select Your Stream</h2>
+        <form id="streamForm">
+            <div class="stream-container">
+                <!-- Science Stream Selection -->
+                <div class="stream-box">
+                    <label for="science">Science Stream:</label>
+                    <select id="science" name="stream_science">
+                        <option value="none">-- Select --</option>
+                        <option value="Bachelor of Science">Bachelor of Science (B.Sc)</option>
+                        <option value="Engineering">Engineering (B.Tech/B.E)</option>
+                        <option value="Medical Science">Medical Science (MBBS/BDS)</option>
+                        <option value="Pharmacy">Pharmacy (B.Pharm)</option>
+                        
+                    </select>
+                </div>
+
+                <!-- Commerce Stream Selection -->
+                <div class="stream-box">
+                    <label for="commerce">Commerce Stream:</label>
+                    <select id="commerce" name="stream_commerce">
+                        <option value="none">-- Select --</option>
+                        <option value="Bachelor of Commerce">Bachelor of Commerce (B.Com)</option>
+                        <option value="Business Administration">Business Administration (BBA)</option>
+                        <option value="Accounting">Chartered Accountancy (CA)</option>
+                        <option value="Account">Chartered Secretary (CS)</option>
+                    </select>
+                </div>
+
+                <!-- Arts Stream Selection -->
+                <div class="stream-box">
+                    <label for="arts">Arts Stream:</label>
+                    <select id="arts" name="stream_arts">
+                        <option value="none">-- Select --</option>
+                        <option value="History">Bachelor of Arts</option>
+                        <option value="Design">Design Courses</option>
+                        <option value="Fine Arts">Bachelor Of Fine Arts</option>
+                        <option value="Psychology">Psychology</option>
+                    </select>
+                </div>
+
+                <!-- Other Stream Selection -->
+                <div class="stream-box">
+                    <label for="other">Other Options:</label>
+                    <select id="other" name="stream_other">
+                        <option value="none">-- Select --</option>
+                        <option value="Diploma">Diploma in Travel & Tourism</option>
+                        <option value="Laboratory">Laboratory Technician Diploma (D.M.L.T)</option>
+                        <option value="BCA">BCA/BCS</option>
+                        <option value="Hotel Management">Hotel Management Diploma</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="button" class="submit-button" onclick="showRecommendation()">Get Recommendation</button>
+        </form>
+
+        <div id="recommendation" class="recommendation" style="display:none;"> 
+            <h3>Your Recommended Colleges:</h3>
+            <ul id="collegeList" class="college-list"></ul>
+            <p id="recommendationMessage"></p>
+        </div>
+    </section>
+
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById("hiddenNav");
+            nav.classList.toggle("active");
+        }
+
+        function showRecommendation() {
+            const science = document.getElementById("science").value;
+            const commerce = document.getElementById("commerce").value;
+            const arts = document.getElementById("arts").value;
+            const other = document.getElementById("other").value;
+            const collegeList = document.getElementById("collegeList");
+            const recommendationMessage = document.getElementById("recommendationMessage");
+            const recommendationDiv = document.getElementById("recommendation");
+
+            // College data with detailed information
+            const collegeData = {
+                "Shivaji University, Kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "contact@unishivaji.ac.in",
+                    tuitionFee: "INR 20,000 per semester",
+                    naacGrade: "A",
+                    meritList: "Available on university website",
+                    phone: "+91 231 2609000",
+                    intake:"60"
+                },
+                "Sanjay Ghodawat University": {
+                    location: "Atigre, Kolhapur",
+                    email: "info@sanjayghodawatuniversity.ac.in",
+                    tuitionFee: "INR 50,000 per semester",
+                    naacGrade: "A",
+                    meritList: "Available on university website",
+                    phone: "+91 231 2626196",
+                    intake:"60"
+                },
+                "Devchand College": {
+                    location: "Arjunnagar, Kolhapur",
+                    email: "principal@devchandcollege.org",
+                    tuitionFee: "INR 15,000 per semester",
+                    naacGrade: "B",
+                    meritList: "Contact college for details",
+                    phone: "+91 231 2421369",
+                    intake:"60"
+                },
+                "Bhogawati Mahavidyalaya": {
+                    location: "Kurukali, Kolhapur",
+                    email: "info@bhogawaticollege.org",
+                    tuitionFee: "INR 10,000 per semester",
+                    naacGrade: "B",
+                    meritList: "Contact college for details",
+                    phone: "+91 231 2471234",
+                    intake:"60"
+                },
+                "Kolhapur Institute Of Technology, Gokul Shirgaon": {
+                    location: "Gokul Shirgaon, Kolhapur, Maharashtra, India",
+                    email: "principal@kitcoek.in",
+                    tuitionFee: "INR 1,00,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2638141 / +91 231 2638880",
+                    intake:"60"
+                },
+                "D.Y. Patil College of Engineering & Technology, Kolhapur": {
+                    location: "Kasaba Bawada, Kolhapur, Maharashtra, India",
+                    email: "info@dypatilcoek.in",
+                    tuitionFee: "INR 1,10,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2601431 / +91 231 2601432",
+                    intake:"60"
+                },
+                "Sanjeevan Group Of Institute (SETI), Panhala": {
+                    location: "Panhala, Kolhapur, Maharashtra, India",
+                    email: "info@seti.edu.in",
+                    tuitionFee: "INR 90,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2345678 / +91 231 2345679",
+                    intake:"60"
+                },
+                "Tatyasaheb Kore Institute of Engineering and Technology, Warananagar": {
+                    location: "Warananagar, Kolhapur, Maharashtra, India",
+                    email: "info@tkietwarana.ac.in",
+                    tuitionFee: "INR 95,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2471234 / +91 231 2475678",
+                    intake:"60"
+                },
+                "Sharad Institute of Technology College of Engineering, Yadrav": {
+                    location: "Yadrav, Kolhapur, Maharashtra",
+                    email: "info@sitcoe.ac.in",
+                    tuitionFee: "IINR ₹95,000 - ₹1,25,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2471234 / +91 231 2475678",
+                    intake:"60"
+                },
+                "Rajarshi Chhatrapati Shahu Maharaj Government Medical College (RCSMGMC)": {
+                    location: "Dasara Chowk, Kolhapur, Maharashtra, India",
+                    email: "principal.rcsmgmckolhapur@gmail.com",
+                    tuitionFee: "INR 70,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on NEET scores",
+                    phone: "+91 231 2641473 / +91 231 2641474",
+                    intake:"60"
+                },
+                "Dr. D.Y. Patil Medical College, Kolhapur": {
+                    location: "Kasaba Bawada, Kolhapur, Maharashtra, India",
+                    email: "info.medical@dypatilkolhapur.org",
+                    tuitionFee: "INR 20,00,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on NEET scores",
+                    phone: "+91 231 2601235 / +91 231 2601236",
+                    intake:"60"
+                },
+                "Tatyasaheb Kore Dental College & Research Centre": {
+                    location: "Kasaba Bawada, Kolhapur, Maharashtra, India",
+                    email: "info.medical@dypatilkolhapur.org",
+                    tuitionFee: "INR 20,00,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on NEET scores",
+                    phone: "+91 231 2601235 / +91 231 2601236",
+                    intake:"60"
+                },
+                "Bharati Vidyapeeth College of Pharmacy, Kolhapur": {
+                    location: "Near Chitranagari, Kolhapur, Maharashtra, India",
+                    email: "bvcpkolhapur@bharatividyapeeth.edu",
+                    tuitionFee: "INR 1,20,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or other relevant entrance scores",
+                    phone: "+91 231 2637286 / +91 231 2637287",
+                    intake:"60"
+                },
+                "Sarojini College of Pharmacy": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@sarojinicollegeofpharmacy.edu.in",
+                    tuitionFee: "INR 85,000 per year",
+                    naacGrade: "B",
+                    meritList: "Available on the college website; based on MHT-CET or relevant entrance exams",
+                    phone: "+91 231 2547890 / +91 231 2547891",
+                    intake:"60"
+                },
+                 "New College of Pharmacy": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "contact@newcollegeofpharmacykolhapur.edu.in",
+                    tuitionFee: "INR 90,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on MHT-CET or other pharmacy entrance exams",
+                    phone: "+91 231 2554321 / +91 231 2554322",
+                    intake:"60"
+                },
+                "Tatyasaheb Kore College of Pharmacy": {
+                    location: "Warananagar, Kolhapur, Maharashtra, India",
+                    email: "info@tkcpwarana.ac.in",
+                    tuitionFee: "INR 95,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or other pharmacy entrance exams",
+                    phone: "+91 231 2471234 / +91 231 2475678",
+                    intake:"60"
+                },
+                "Sanjay Ghodawat University": {
+                    location: "Atigre, Kolhapur, Maharashtra, India",
+                    email: "info@sanjayghodawatuniversity.ac.in",
+                    tuitionFee: "INR 1,50,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the university website; based on entrance exams like JEE, MHT-CET, or university-specific exams",
+                    phone: "+91 231 2626196 / +91 231 2626197",
+                    intake:"60"
+                },
+                "D. D. Shinde Sarkar College": {
+                    location: "Dasara Chowk, Kolhapur, Maharashtra, India",
+                    email: "principal@ddsarkarcollege.edu.in",
+                    tuitionFee: "INR 30,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2541234 / +91 231 2545678",
+                    intake:"60"
+                },
+                "Devchand College": {
+                    location: "Arjunnagar, Kolhapur, Maharashtra, India",
+                    email: "principal@devchandcollege.org",
+                    tuitionFee: "INR 25,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2421369 / +91 231 2421370",
+                    intake:"60"
+                },
+                "Ajara Mahavidyalaya": {
+                    location: "Ajara, Kolhapur, Maharashtra, India",
+                    email: "principal@ajaracollege.edu.in",
+                    tuitionFee: "INR 20,000 per year",
+                    naacGrade: "B",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2471567 / +91 231 2471568",
+                    intake:"60"
+                },         
+                "Chhatrapati Shahu Institute of Business Education and Research (CSIBER)":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "csiber@csiber.edu.in",
+                    tuitionFee: "Approx. ₹50,000 - ₹80,000 per year",
+                    naacGrade: "A+",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 268 2891",
+                    intake:"60"
+                },
+                "Bharati Vidyapeeth Deemed University, Institute of Management, Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "imk@bharatividyapeeth.edu",
+                    tuitionFee: "Approx. ₹1,00,000 - ₹1,50,000 per year",
+                    naacGrade: "A+",                       
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 6289",
+                    intake:"60"
+                },
+                "D. Y. Patil College of Commerce and Management": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "dypccm@dypatil.edu",
+                    tuitionFee: "Approx. ₹40,000 - ₹70,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 268 3311",
+                    intake:"60"
+                },
+                "Vivekanand College": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "vivekanandcollege.kolhapur@gmail.com",
+                    tuitionFee: "Approx. ₹25,000 - ₹40,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 5410",
+                    intake:"60"
+                },
+                "Elite Professional Academy (EPA)": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@epacollege.edu.in",
+                    tuitionFee: "Approx. ₹25,000 - ₹50,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 7345",
+                    intake:"60"
+                },
+                "The Institute of Chartered Accountants of India (ICAI), Kolhapur Branch": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "icai.kolhapur@icai.org",
+                    tuitionFee: "Varies by program (CA Courses)",
+                    naacGrade: "Not Applicable",
+                    meritList: "Not applicable, Admission based on entrance exam and selection criteria",
+                    phone: "+91 231 260 5282",
+                    intake:"60"
+                },
+                "Poddar Institute of Education": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@poddar.edu.in",
+                    tuitionFee: "Approx. ₹40,000 - ₹60,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 260 4747",
+                    intake:"60"
+                },
+                "National Academy of Commerce (NAC)": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "nac.kolhapur@gmail.com",
+                    tuitionFee: "Approx. ₹20,000 - ₹40,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 3281",
+                    intake:"60"
+                },
+                "ICSI Study Center, Shivaji University": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "icsi@unishivaji.ac.in",
+                    tuitionFee: "Varies by program (CSEET, CS Executive, etc.)",
+                    naacGrade: "A+",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 260 9065",
+                    intake:"60"
+                },
+                "DYP Academy of CS, Kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "dypcsacademy@dypatil.edu",
+                    tuitionFee: "Approx. ₹50,000 - ₹70,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 260 1501",
+                    intake:"60"
+                },
+                "Academy of Company Secretary (ACS), Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "acs.kolhapur@gmail.com",
+                    tuitionFee: "Varies by program (CSEET, CS Executive, etc.)",
+                    naacGrade: "Not Applicable",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 7402",
+                    intake:"60"
+                },
+                "Rajaram College, Kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "rajaramcollege.kolhapur@gmail.com",
+                    tuitionFee: "Approx. ₹20,000 - ₹40,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 2324",
+                    intake:"60"
+                },
+                "Shivaji University, Kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "contact@unishivaji.ac.in",
+                    tuitionFee: "INR 20,000 per semester",
+                    naacGrade: "A",
+                    meritList: "Available on university website",
+                    phone: "+91 231 2609000",
+                    intake:"60"
+                },
+                "D. D. Shinde Sarkar College, Kolhapur": {
+                    location: "Dasara Chowk, Kolhapur, Maharashtra, India",
+                    email: "principal@ddsarkarcollege.edu.in",
+                    tuitionFee: "INR 30,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2541234 / +91 231 2545678",
+                    intake:"60"
+                },    
+                "Ajara Mahavidyalaya": {
+                    location: "Ajara, Kolhapur, Maharashtra, India",
+                    email: "principal@ajaracollege.edu.in",
+                    tuitionFee: "INR 20,000 per year",
+                    naacGrade: "B",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2471567 / +91 231 2471568",
+                    intake:"60"
+                },
+                "Devchand College": {
+                    location: "Arjunnagar, Kolhapur, Maharashtra, India",
+                    email: "principal@devchandcollege.org",
+                    tuitionFee: "INR 25,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2421369 / +91 231 2421370",
+                    intake:"60"
+                },
+                "Deccan College of Interior Designs":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@deccancollege.edu.in",
+                    tuitionFee: "Approx. ₹80,000 - ₹1,00,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 20 2567 4389",
+                    intake:"60"
+                },
+                "Kalaprabodhini's Institute of Design":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "kalaprabodhini@rediffmail.com",
+                    tuitionFee: "Approx. ₹75,000 - ₹90,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 20 2432 2594",
+                    intake:"60"
+                },
+                "Interior College of Design": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@interiorcollegeofdesign.edu",
+                    tuitionFee: "Approx. ₹70,000 - ₹90,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 20 2547 3738",
+                    intake:"60"
+                },
+                "DKTE Society's Textile and Engineering Institute": {
+                    location: "Ichalkaranji, Maharashtra",
+                    email: "dkte@dkte.ac.in",
+                    tuitionFee: "Approx. ₹50,000 - ₹80,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 2386 224 760",
+                    intake:"60"
+                },
+                "Kala Mahavidyalaya, Kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "kalamahavidyalaya@rediffmail.com",
+                    tuitionFee: "Approx. ₹20,000 - ₹30,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 265 6289",
+                    intake:"60"
+                },
+                "Shivaji University’s Department of Fine Arts": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "finearts@unishivaji.ac.in",
+                    tuitionFee: "Approx. ₹30,000 - ₹50,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 231 260 9065",
+                    intake:"60"
+                },
+                "Shri Mouni Vidyapeeth’s College of Fine Arts, Gargoti": {
+                    location: "Gargoti, Maharashtra",
+                    email: "mounividyapeeth@gmail.com",
+                    tuitionFee: "Approx. ₹15,000 - ₹30,000 per year",
+                    naacGrade: "Not Available",
+                    meritList: "Available on the official website after admission process",
+                    phone: "+91 2366 283 563",
+                    intake:"60"
+                },
+                 "Sanjeevan group of institution": {
+                    location: "Panhala, Kolhapur, Maharashtra, India",
+                    email: "info@seti.edu.in",
+                    tuitionFee: "INR 90,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2345678 / +91 231 2345679",
+                    intake:"60"
+                },
+                "College of Arts & Humanities": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@coah.edu.in",
+                    tuitionFee: "INR 70,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2346789 / +91 231 2346790",
+                    intake:"60"
+                },
+                "National Institute of Psychology": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@nipkolhapur.edu.in",
+                    tuitionFee: "INR 85,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2456789 / +91 231 2456790",
+                    intake:"60"
+                },
+                "Institute of Social Sciences": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@isskolhapur.edu.in",
+                    tuitionFee: "INR 75,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2467890 / +91 231 2467891",
+                    intake:"60"
+                },
+                "Shivaji University,kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@unishivaji.ac.in",
+                    tuitionFee: "Varies by program",
+                    naacGrade: "A++",
+                    meritList: "Available on the university website; based on HSC scores, entrance exams, or university-specific criteria",
+                    phone: "+91 231 2609000 / +91 231 2609063",
+                    intake:"60"
+                },
+                "Chh. Shahu Institute of Business Education and Research (CSIBER)": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@csiber.edu.in",
+                    tuitionFee: "INR 95,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the institute website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2535706 / +91 231 2535707",
+                    intake:"60"
+                },
+                "D.Y. Patil University, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@dypatilunikolhapur.edu.in",
+                    tuitionFee: "INR 1,10,000 per year",
+                    naacGrade: "A+",
+                    meritList: "Available on the university website; based on HSC scores, entrance exams, or university-specific criteria",
+                    phone: "+91 231 2609001 / +91 231 2609002",
+                    intake:"60"
+                },
+                "Government Polytechnic, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@gpkolhapur.org",
+                    tuitionFee: "INR 15,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on SSC scores and CAP (Centralized Admission Process) ranking",
+                    phone: "+91 231 2521039 / +91 231 2521040",
+                    intake:"60"
+                },
+                "Government Medical College, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@gmckolhapur.edu.in",
+                    tuitionFee: "INR 1,00,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on NEET scores",
+                    phone: "+91 231 2534000 / +91 231 2534001",
+                    intake:"60"
+                },
+                "Shri Shahu Mandir Sansthan's Institute of Medical Technology": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@ssmsimt.edu.in",
+                    tuitionFee: "INR 50,000 per year",
+                    naacGrade: "B",
+                    meritList: "Available on the institute website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2525000 / +91 231 2525001",
+                    intake:"60"
+                },
+
+                "Dr. Balasaheb Sawant Konkan Krishi Vidyapeeth (DBSKKV)": {
+                    location: "Dapoli, Maharashtra, India",
+                    email: "info@dbskkv.edu.in",
+                    tuitionFee: "Varies by program",
+                    naacGrade: "A",
+                    meritList: "Available on the university website; based on HSC scores and entrance exam performance for agriculture-related courses",
+                    phone: "+91 2358 282065 / +91 2358 282066",
+                    intake:"60"
+                },
+
+                "Rajaram College, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@rajaramcollege.edu.in",
+                    tuitionFee: "INR 30,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2531759 / +91 231 2531760",
+                    intake:"60"
+                },
+                "Shivaji University, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@unishivaji.ac.in",
+                    tuitionFee: "Varies by program",
+                    naacGrade: "A++",
+                    meritList: "Available on the university website; based on HSC scores, entrance exams, or university-specific criteria",
+                    phone: "+91 231 2609000 / +91 231 2609063",
+                    intake:"60"
+                },
+
+                "D.Y. Patil College of Engineering and Technology": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@dypatilcollege.edu.in",
+                    tuitionFee: "INR 1,00,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on MHT-CET or JEE scores",
+                    phone: "+91 231 2698000 / +91 231 2698001",
+                    intake:"60"
+                },
+
+                "Rajaram College, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@rajaramcollege.edu.in",
+                    tuitionFee: "INR 30,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2531759 / +91 231 2531760",
+                    intake:"60"
+                },
+
+                "The New College Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@newcollegekolhapur.edu.in",
+                    tuitionFee: "INR 25,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on HSC scores",
+                    phone: "+91 231 2674351 / +91 231 2674352",
+                    intake:"60"
+                },
+                "D.Y. Patil College of Hospitality and Tourism Studies": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@dypatilhospitality.edu.in",
+                    tuitionFee: "INR 85,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2698002 / +91 231 2698003",
+                    intake:"60"
+                },
+
+                "Sanjivani Rural Education Society's College of Hotel Management": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@sanjivanihotelmanagement.edu.in",
+                    tuitionFee: "INR 70,000 per year",
+                    naacGrade: "B+",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2697001 / +91 231 2697002",
+                    intake:"60"
+                },
+
+                "Vijayapur College of Hotel Management": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@vijayapurhotelmanagement.edu.in",
+                    tuitionFee: "INR 60,000 per year",
+                    naacGrade: "B",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2651234 / +91 231 2651235",
+                    intake:"60"
+                },
+
+                "Institute of Hotel Management and Catering Technology, Kolhapur": {
+                    location: "Kolhapur, Maharashtra, India",
+                    email: "info@ihmctkolhapur.edu.in",
+                    tuitionFee: "INR 80,000 per year",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on HSC scores and entrance exam performance",
+                    phone: "+91 231 2545678 / +91 231 2545679",
+                    intake:"60"
+                }
+
+        };
+
+            let colleges = [];
+            let message = "";
+
+            // Clear previous results
+            collegeList.innerHTML = "";
+            recommendationMessage.innerHTML = "";
+
+            // Example: Populating college list for Science stream (you can do this for each stream as needed)
+            if (science === "Bachelor of Science") {
+                colleges = [
+                    "Shivaji University, Kolhapur",
+                    "Sanjay Ghodawat University",
+                    "Devchand College",
+                    "Bhogawati Mahavidyalaya"
+                ];
+                message = "Science opens doors to careers in engineering, medicine, and science. Here are the recommended colleges.";
+            }else if (science === "Engineering"){
+                colleges = [
+                "Kolhapur Institute Of Technology, Gokul Shirgaon",
+                "D.Y. Patil College of Engineering & Technology, Kolhapur",
+                "Sanjeevan Group Of Institute (SETI), Panhala",
+                "Tatyasaheb Kore Institute of Engineering and Technology, Warananagar",
+                "Sharad Institute of Technology College of Engineering, Yadrav"
+                ];
+                message = "Science opens doors to careers in engineering, medicine, and science. Here are the recommended colleges.";
+        } else if (science === "Medical Science"){
+                colleges = [
+                "Rajarshi Chhatrapati Shahu Maharaj Government Medical College (RCSMGMC)",
+                "Dr. D.Y. Patil Medical College, Kolhapur",
+                "Tatyasaheb Kore Dental College & Research Centre"
+                ];
+                message = "Science opens doors to careers in engineering, medicine, and science. Here are the recommended colleges.";
+        } else if (science === "Pharmacy"){
+                colleges = [
+                "Bharati Vidyapeeth College of Pharmacy, Kolhapur",
+                "Sarojini College of Pharmacy",
+                "New College of Pharmacy",
+                "Tatyasaheb Kore College of Pharmacy"
+                ];
+                message = "Science opens doors to careers in engineering, medicine, and science. Here are the recommended colleges.";
+        } else if (commerce === "Bachelor of Commerce") {
+            colleges = [
+                "Sanjay Ghodawat University",
+                "D. D. Shinde Sarkar College",
+                "Devchand College",
+                "Ajara Mahavidyalaya"
+            ];
+            message = "Commerce opens doors to careers in finance, management, and entrepreneurship. Here are the recommended colleges.";
+        } else if (commerce === "Business Administration"){
+            colleges = [
+            "Chhatrapati Shahu Institute of Business Education and Research (CSIBER)",
+            "Bharati Vidyapeeth Deemed University, Institute of Management, Kolhapur",
+            "D. Y. Patil College of Commerce and Management",
+            "Vivekanand College"
+            ];
+            message = "Commerce opens doors to careers in finance, management, and entrepreneurship. Here are the recommended colleges.";
+        } else if (commerce === "Accounting"){
+            colleges = [
+            "Elite Professional Academy (EPA)",
+            "The Institute of Chartered Accountants of India (ICAI), Kolhapur Branch",
+            "Poddar Institute of Education",
+            "National Academy of Commerce (NAC)"
+            ];
+            message = "Commerce opens doors to careers in finance, management, and entrepreneurship. Here are the recommended colleges.";
+        } else if (commerce === "Account"){
+            colleges = [
+            "ICSI Study Center, Shivaji University",
+            "DYP Academy of CS, Kolhapur",
+            "Academy of Company Secretary (ACS), Kolhapur",
+            "Rajaram College, Kolhapur"
+            ];
+        }
+         else if (arts === "History") {                                                     
+            colleges = [
+                "Shivaji University, Kolhapur",
+                "D. D. Shinde Sarkar College",
+                "Ajara Mahavidyalaya",
+                "Devchand College"
+            ];
+            message = "The Arts stream fosters creativity and critical thinking. These institutions are renowned for their arts programs.";
+        } else if (arts === "Design") {
+            colleges = [
+                "Deccan College of Interior Designs",
+                "Kalaprabodhini's Institute of Design",
+                "Interior College of Design",
+                "DKTE Society's Textile and Engineering Institute"
+            ];
+            message = "The Arts stream fosters creativity and critical thinking. These institutions are renowned for their arts programs.";
+        }  else if (arts === "Fine Arts") {
+            colleges = [
+                "Kala Mahavidyalaya, Kolhapur",
+                "Shivaji University’s Department of Fine Arts",
+                "Shri Mouni Vidyapeeth’s College of Fine Arts, Gargoti",
+                "Sanjeevan group of institution"
+            ];
+            message = "The Arts stream fosters creativity and critical thinking. These institutions are renowned for their arts programs.";
+        }else if (arts === "Psychology") {
+            colleges = [
+                "College of Arts & Humanities",
+                "National Institute of Psychology",
+                "Institute of Social Sciences"
+            ];
+            message = "The Arts stream fosters creativity and critical thinking. These institutions are renowned for their arts programs.";
+        } else if (other === "Diploma") {
+            colleges = [
+                "Shivaji University, Kolhapur",
+                "Chh. Shahu Institute of Business Education and Research (CSIBER)",
+                "D.Y. Patil University, Kolhapur",
+                "Government Polytechnic, Kolhapur"
+            ];
+            message = "These specialized courses offer practical skills in fields such as ITI, Diploma, and Technical education.";
+        } else if (other === "Laboratory") {
+            colleges = [
+                "Government Medical College, Kolhapur",
+                "Shri Shahu Mandir Sansthan's Institute of Medical Technology",
+                "Dr. Balasaheb Sawant Konkan Krishi Vidyapeeth (DBSKKV)",
+                "Rajaram College, Kolhapur"
+            ];
+            message = "These specialized courses offer practical skills in fields such as ITI, Diploma, and Technical education.";
+        } else if (other === "BCA") {
+            colleges = [
+                "Shivaji University, Kolhapur",
+                "D.Y. Patil College of Engineering and Technology",
+                "Rajaram College, Kolhapur",
+                "The New College Kolhapur"
+            ];
+            message = "These specialized courses offer practical skills in fields such as ITI, Diploma, and Technical education.";
+        } else if (other === "Hotel Management") {
+            colleges = [
+                "D.Y. Patil College of Hospitality and Tourism Studies",
+                "Sanjivani Rural Education Society's College of Hotel Management",
+                "Vijayapur College of Hotel Management",
+                "Institute of Hotel Management and Catering Technology, Kolhapur"
+            ];
+            message = "These specialized courses offer practical skills in fields such as ITI, Diploma, and Technical education.";
+        }
+        
+        
+            // Repeat for other selections...
+
+            if (colleges.length > 0) {
+                colleges.forEach(function (collegeName) {
+                    const li = document.createElement("li");
+                    li.textContent = collegeName;
+            
+                    // Apply inline CSS for left-side alignment
+                    li.style.listStyleType = "none";
+                    li.style.padding = "10px";
+                    li.style.marginBottom = "10px";
+                    li.style.border = "1px solid #ddd";
+                    li.style.borderRadius = "5px";
+                    li.style.backgroundColor = "#f9f9f9";
+                    li.style.textAlign = "left"; // Align text to the left
+            
+                    // Create a div for the college information popup
+                    const infoPopup = document.createElement("div");
+                    infoPopup.classList.add("college-info-popup");
+            
+                    // Apply inline CSS for info popup styling
+                    infoPopup.style.display = "none";
+                    infoPopup.style.padding = "10px";
+                    infoPopup.style.marginTop = "10px";
+                    infoPopup.style.border = "1px solid #ddd";
+                    infoPopup.style.borderRadius = "5px";
+                    infoPopup.style.backgroundColor = "#e9e9e9";
+                    infoPopup.style.textAlign = "left"; // Align text to the left for popup as well
+            
+                    // Check if college has detailed data
+                    if (collegeData[collegeName]) {
+                        const details = collegeData[collegeName];
+                        infoPopup.innerHTML = `
+                            <strong>Location:</strong> ${details.location}<br>
+                            <strong>Email:</strong> <a href="mailto:${details.email}">${details.email}</a><br>
+                            <strong>Tuition Fee:</strong> ${details.tuitionFee}<br>
+                            <strong>NAAC Grade:</strong> ${details.naacGrade}<br>
+                            <strong>Merit List:</strong> ${details.meritList}<br>
+                            <strong>Phone:</strong> <a href="tel:${details.phone}">${details.phone}</a><br>
+                            <strong>Intake:</strong> ${details.intake}<br>
+                        `;
+                    } else {
+                        infoPopup.textContent = "Information not available";
+                    }
+
+                    // Toggle visibility of information popup on click
+                    li.onclick = function () {
+                        infoPopup.style.display = infoPopup.style.display === "none" ? "block" : "none";
+                    };
+
+                    // Append info popup to the list item and add to the list
+                    
+                    li.appendChild(infoPopup);
+                    collegeList.appendChild(li);
+                });
+                recommendationMessage.textContent = message;
+                recommendationDiv.style.display = "block";
+            } else {
+                recommendationDiv.style.display = "none";
+            }
+        }
+    </script>
+    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #101292;">
+        <strong>Note:</strong>
+        First, click on 'Select' before proceeding to the next stream.<br><br><br>
+    </div>
+    
+
+</body>
+
+</html>

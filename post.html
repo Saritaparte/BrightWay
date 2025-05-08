@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Graduation Course and College Recommendation</title>
+</head>
+<body style="font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #6a11cb, #25fcf5); overflow: hidden;">
+    <div class="container" style="text-align: center; padding: 2rem; background-color: rgba(255, 255, 255, 0.9); border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); width: 90%; max-width: 400px;">
+        <h1 style="color: #333; font-size: 1.8em; margin-bottom: 1rem; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Select Your Post-Graduation Course</h1>
+        <form>
+            <label for="postgrad-course" style="font-size: 1.2em; color: #555;">Choose a course for advanced studies:</label>
+            <select id="postgrad-course" name="postgrad-course" required style="margin-top: 1rem; padding: 12px; font-size: 1em; width: 100%; border-radius: 8px; border: 1px solid #ccc; transition: all 0.3s; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);">
+                <option value="" disabled selected>Select your course</option>
+                <option value="phd">Ph.D.</option>
+                <option value="mba">MBA</option>
+                <option value="mtech">M.Tech</option>
+                <option value="msc">M.Sc</option>
+                <option value="mcom">M.Com</option>
+                <option value="mca">MCA</option>
+                <option value="med">M.Ed</option>
+                <option value="llm">LL.M</option>
+            </select>
+
+            <button type="button" class="recommend-button" onclick="showRecommendations()" style="margin-top: 1.5rem; padding: 14px; font-size: 1em; width: 100%; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);">Show Recommendations</button>
+        </form>
+
+        <!-- Recommendations Section -->
+        <div id="recommendations" style="display: none; margin-top: 2rem;">
+            <h2 style="color: #333; font-size: 1.4em; margin-bottom: 0.5rem;">Recommended Colleges</h2>
+            <ul id="college-list" style="list-style-type: none; padding: 0; font-size: 1em; color: #555; margin-left: 0; text-align: left;"></ul>
+            <div id="college-details" style="display: none; margin-top: 2rem;">
+                <h3 style="color: #333; font-size: 1.2em;">College Details:</h3>
+                <div id="details" style="text-align: left; font-size: 1em; color: #555;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Button -->
+    <button id="nav-toggle" onclick="toggleNavigation()" style="position: fixed; top: 20px; left: 20px; background-color: #2575fc; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; z-index: 1100;">
+        ☰
+    </button>
+
+    <!-- Hidden Navigation Bar -->
+    <div class="hidden-navigation" id="hidden-nav" style="display: none; position: absolute; top: 60px; left: 20px; background-color: rgba(106, 184, 214, 0.9); padding: 10px; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; transition: opacity 0.3s ease; opacity: 0; visibility: hidden;">
+        <ul style="list-style: none; padding: 0; margin: 0; text-align: center;">
+            <li style="margin: 10px 0; transition: transform 0.2s ease;">
+                <a href="career.php?path=home-pass" style="text-decoration: none; font-size: 18px; color: #333; padding: 5px; display: block; transition: color 0.3s ease;">Home</a>
+            </li>
+            <li style="margin: 10px 0; transition: transform 0.2s ease;">
+                <a href="career.php?path=10th-pass" style="text-decoration: none; font-size: 18px; color: #333; padding: 5px; display: block; transition: color 0.3s ease;">10th Pass</a>
+            </li>
+            <li style="margin: 10px 0; transition: transform 0.2s ease;">
+                <a href="career.php?path=12th-pass" style="text-decoration: none; font-size: 18px; color: #333; padding: 5px; display: block; transition: color 0.3s ease;">12th Pass</a>
+            </li>
+            <li style="margin: 10px 0; transition: transform 0.2s ease;">
+                <a href="career.php?path=post-graduation" style="text-decoration: none; font-size: 18px; color: #333; padding: 5px; display: block; transition: color 0.3s ease;">Post Graduation</a>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const collegeData = {
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@shivajiuniversity.edu",
+                tuitionFee: "Based on your merit",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609061",
+                divisions: "10",
+                intake: "PCM=100, Electronics=50"
+            },
+            "Dr. D.Y. Patil Education Society, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "contact@dypatil.edu",
+                tuitionFee: "Based on your merit",
+                naacGrade: "A+",
+                meritList: "Available on university website",
+                phone: "0231-2652645",
+                divisions: "5",
+                intake: "MCA=80, MTech=60"
+             },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by program",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "20+",
+                intake: "Engineering=500, MBA=120"
+            },
+            "Yashwantrao Chavan College of Engineering (YCCE), Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@yccekolhapur.edu",
+                tuitionFee: "Based on merit and category",
+                naacGrade: "B+",
+                meritList: "Available on college website",
+                phone: "0231-2621234",
+                divisions: "6",
+                intake: "Engineering=360"
+            },
+            "Sampatrao Kadam College of Engineering (SKCE), Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "contact@skcekolhapur.ac.in",
+                tuitionFee: "As per university guidelines",
+                naacGrade: "B",
+                meritList: "Available on college website",
+                phone: "0231-2634567",
+                divisions: "4",
+                intake: "Engineering=240"
+            },
+            "Kishore A.V. Patil College of Engineering and Management, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@kapcekolhapur.edu",
+                tuitionFee: "Based on government norms",
+                naacGrade: "B",
+                meritList: "Check college website for details",
+                phone: "0231-2645678",
+                divisions: "5",
+                intake: "Engineering=300"
+            },
+            "Yashwantrao Chavan College of Engineering (YCCE), Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@yccekolhapur.edu",
+                tuitionFee: "Based on merit and category",
+                naacGrade: "B+",
+                meritList: "Available on college website",
+                phone: "0231-2621234",
+                divisions: "6",
+                intake: "B.Tech=360"
+            },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by program",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "20+",
+                intake: "B.Tech=500"
+            },
+            "Kishore A.V. Patil College of Engineering and Management, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@kapcekolhapur.edu",
+                tuitionFee: "Based on government norms",
+                naacGrade: "B",
+                meritList: "Check college website for details",
+                phone: "0231-2645678",
+                divisions: "5",
+                intake: "B.Tech=300"
+            },
+            "Dr. D.Y. Patil Education Society, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@dypes.edu.in",
+                tuitionFee: "As per government regulations",
+                naacGrade: "A",
+                meritList: "Available on institute website",
+                phone: "0231-2661234",
+                divisions: "8",
+                intake: "B.Tech=400"
+            },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by specialization",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "12+",
+                intake: "M.Sc=250"
+            },
+            "Kishor K. Joshi Arts & Science College, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "contact@kkjcollege.edu",
+                tuitionFee: "As per university norms",
+                naacGrade: "B",
+                meritList: "Check college website for updates",
+                phone: "0231-2678900",
+                divisions: "4",
+                intake: "M.Sc=100"
+            },
+            "Vivekanand College, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@vivekanandcollege.edu",
+                tuitionFee: "Varies by department",
+                naacGrade: "A",
+                meritList: "Available on college website",
+                phone: "0231-2504567",
+                divisions: "8",
+                intake: "M.Sc=150"
+            },
+            "Dr. J. J. Magdum College of Science, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@jjmcskolhapur.edu",
+                tuitionFee: "Based on merit and category",
+                naacGrade: "B+",
+                meritList: "Check college website",
+                phone: "0231-2646789",
+                divisions: "6",
+                intake: "M.Sc=80"
+            },
+            "Rajaram College, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@rajaramcollege.edu.in",
+                tuitionFee: "As per university norms",
+                naacGrade: "A",
+                meritList: "Available on college website",
+                phone: "0231-2656789",
+                divisions: "4",
+                intake: "M.Com=80"
+            },
+            "Yashwantrao Chavan College of Arts, Science & Commerce, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@yccollegekolhapur.edu",
+                tuitionFee: "Based on merit and category",
+                naacGrade: "B+",
+                meritList: "Check college website",
+                phone: "0231-2641234",
+                divisions: "5",
+                intake: "M.Com=120"
+            },
+            "Dr. J. J. Magdum College of Commerce, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "contact@magdumcollege.edu",
+                tuitionFee: "Varies by merit",
+                naacGrade: "B",
+                meritList: "Available on college website",
+                phone: "0231-2634567",
+                divisions: "3",
+                intake: "M.Com=60"
+            },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by program",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "7+",
+                intake: "M.Com=200"
+            },
+            "Rajaram College, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@rajaramcollege.edu.in",
+                tuitionFee: "As per university norms",
+                naacGrade: "A",
+                meritList: "Available on college website",
+                phone: "0231-2656789",
+                divisions: "2",
+                intake: "M.Ed=50"
+            },
+            "Bharati Vidyapeeth College of Education, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "admissions@bvcoekolhapur.edu",
+                tuitionFee: "Based on merit and category",
+                naacGrade: "A",
+                meritList: "Available on college website",
+                phone: "0231-2635678",
+                divisions: "3",
+                intake: "M.Ed=60"
+            },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by program",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "4+",
+                intake: "M.Ed=80"
+            },
+            "Shivaji University, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@unishivaji.ac.in",
+                tuitionFee: "Varies by specialization",
+                naacGrade: "A",
+                meritList: "Available on university website",
+                phone: "0231-2609000",
+                divisions: "3+",
+                intake: "LLM=100"
+            },
+            "Rajaram College, Kolhapur": {
+                location: "Kolhapur, Maharashtra, India",
+                email: "info@rajaramcollege.edu.in",
+                tuitionFee: "As per university norms",
+                naacGrade: "A",
+                meritList: "Available on college website",
+                phone: "0231-2656789",
+                divisions: "2",
+                intake: "LLM=50"
+            }
+         }; // Your college data here
+
+        function showRecommendations() { 
+            const course = document.getElementById("postgrad-course").value;
+            const collegeList = document.getElementById("college-list");
+            const recommendations = document.getElementById("recommendations");
+            const collegeDetails = document.getElementById("college-details");
+            const detailsContainer = document.getElementById("details");
+            let colleges = [];
+
+            switch (course) {
+                case "phd":
+                    colleges = ["Shivaji University, Kolhapur", "Dr. D.Y. Patil Education Society, Kolhapur"];
+                    break;
+                case "mba":
+                    colleges = ["Shivaji University, Kolhapur", "Yashwantrao Chavan College of Engineering (YCCE), Kolhapur", "Sampatrao Kadam College of Engineering (SKCE), Kolhapur", "Kishore A.V. Patil College of Engineering and Management, Kolhapur"];
+                    break;
+                case "mtech":
+                    colleges = ["Yashwantrao Chavan College of Engineering (YCCE), Kolhapur", "Shivaji University, Kolhapur", "Kishore A.V. Patil College of Engineering and Management, Kolhapur","Dr. D.Y. Patil Education Society, Kolhapur"];
+                    break;
+                case "msc":
+                    colleges = ["Shivaji University, Kolhapur","Smt. Rajashri Shahu College of Arts & Commerce, Kolhapur","Kishor K. Joshi Arts & Science College, Kolhapur","Vivekanand College, Kolhapur","Dr. J. J. Magdum College of Science, Kolhapur"];
+                    break;
+                case "mcom":
+                    colleges = ["Rajaram College, Kolhapur","Yashwantrao Chavan College of Arts, Science & Commerce, Kolhapur","Dr. J. J. Magdum College of Commerce, Kolhapur","Shivaji University, Kolhapur"];
+                    break;
+                case "mca":
+                    colleges = ["Shivaji University, Kolhapur","Dr. D.Y. Patil Education Society, Kolhapur","Sampatrao Kadam College of Engineering (SKCE), Kolhapur","Yashwantrao Chavan College of Engineering (YCCE), Kolhapur"];
+                    break;
+                case "med":
+                    colleges = ["Rajaram College, Kolhapur","Bharati Vidyapeeth College of Education, Kolhapur","Shivaji University, Kolhapur"];
+                    break;
+                case "llm":
+                    colleges = ["Shivaji University, Kolhapur", "Rajaram College, Kolhapur"];
+                    break;
+            }
+
+            collegeList.innerHTML = "";
+            colleges.forEach(college => {
+                const listItem = document.createElement("li");
+                listItem.textContent = college;
+                listItem.style.padding = "10px 0";
+                listItem.style.borderBottom = "1px solid #eee";
+                listItem.style.cursor = "pointer";
+                listItem.style.transition = "color 0.3s, transform 0.3s";
+                listItem.onmouseover = function() {
+                    listItem.style.color = "#2575fc";
+                    listItem.style.transform = "translateX(10px)";
+                };
+                listItem.onmouseout = function() {
+                    listItem.style.color = "#555";
+                    listItem.style.transform = "translateX(0)";
+                };
+                listItem.onclick = function() {
+                    displayCollegeDetails(college);
+                };
+                collegeList.appendChild(listItem);
+            });
+
+            // Display recommendations
+            recommendations.style.display = "block";
+            recommendations.style.opacity = "0";
+            recommendations.style.transition = "opacity 0.5s ease-in-out";
+            setTimeout(() => {
+                recommendations.style.opacity = "1";
+            }, 10);
+        } // Your showRecommendations function here
+
+        function displayCollegeDetails(college) { 
+            const detailsContainer = document.getElementById("details");
+            const details = collegeData[college];
+            if (details) {
+                detailsContainer.innerHTML = `
+                    <p><strong>Location:</strong> ${details.location}</p>
+                    <p><strong>Email:</strong> ${details.email}</p>
+                    <p><strong>Tuition Fee:</strong> ${details.tuitionFee}</p>
+                    <p><strong>NAAC Grade:</strong> ${details.naacGrade}</p>
+                    <p><strong>Merit List:</strong> ${details.meritList}</p>
+                    <p><strong>Phone:</strong> ${details.phone}</p>
+                    <p><strong>Divisions:</strong> ${details.divisions}</p>
+                    <p><strong>Intake:</strong> ${details.intake}</p>
+                `;
+            }
+         } // Your displayCollegeDetails function here
+         document.getElementById("college-details").style.display = "block";
+        function toggleNavigation() {
+            const nav = document.getElementById("hidden-nav");
+            const display = nav.style.display === "none" ? "block" : "none";
+            nav.style.display = display;
+            nav.style.opacity = display === "block" ? "1" : "0";
+            nav.style.visibility = display === "block" ? "visible" : "hidden";
+        }
+    </script>
+</body>
+</html>

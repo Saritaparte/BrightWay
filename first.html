@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Logo with Background</title>
+    <style>
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .logo-container {
+            width: 500px;
+            height: 500px;
+            background-image: url("/brightway/images/uu.jpg"); /* Background image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Circular shape */
+            box-shadow: 0 4px 15px rgba(46, 2, 44, 0.4); /* Shadow with blue tint */
+            animation: pulse 3s infinite; /* Pulsing effect */
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+        }
+        .logo-container:hover {
+            transform: scale(1.1); /* Slight zoom on hover */
+            box-shadow: 0 8px 20px rgba(57, 2, 55, 0.6); /* Deeper shadow on hover */
+        }
+        .logo-container::before {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(121, 16, 145, 0.5), rgba(166, 21, 21, 0.5)); /* Gradient effect */
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(15px); /* Glowing effect */
+        }
+        .logo-container img {
+            width: 300px;  /* Adjust logo size */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Anchor tag to make the logo clickable -->
+    <a href="login.html">
+        <div class="logo-container">
+            <img src="/brightway/images/logo.png" alt="App Logo">
+        </div>
+    </a>
+</body>
+</html>

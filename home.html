@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance</title>
+    <style>
+        /* Add a background image to the body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("/brightway/images/oo.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        section, header, footer {
+            background-color: rgba(255, 255, 255, 0.85);
+            color: #333;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: linear-gradient(90deg, rgba(118, 10, 161, 0.861), rgba(169, 22, 186, 0.9));
+            color: rgb(235, 246, 249);
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            100% {
+                text-shadow: 0 0 15px #c6b4c6, 0 0 20px #ff00ff, 0 0 25px #00ffff, 0 0 30px #00ffff;
+            }
+        }
+
+        footer {
+            background: linear-gradient(90deg, rgb(129, 76, 175), rgba(175, 74, 195, 0.9));
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e0863;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            text-align: center;
+            color: #1d6021de;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+        }
+
+        .course-button {
+            display: inline-block;
+            background-color: #34c6eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px;
+            text-decoration: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .course-button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .course-button:hover {
+            background-color: #29a5d5;
+            transform: scale(1.05);
+        }
+
+        /* Navigation icon styles */
+        .nav-icon {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Hidden navigation menu styles */
+        .hidden-navigation {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            background-color: rgba(106, 184, 214, 0.9);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Show the navigation menu when it is active */
+        .hidden-navigation.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hidden-navigation ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hidden-navigation ul li {
+            margin: 10px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .hidden-navigation ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .hidden-navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hidden-navigation ul li a:hover {
+            background-color: #34c6eb;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
+
+            .course-button {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+
+            section, footer {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with hidden navigation -->
+    <header>
+        <h1>BRIGHTWAY</h1>
+        <p style="font-size: 18px; margin: 0;">Your Path to a Bright Future</p>
+
+        <!-- Hidden Navigation Icon -->
+        <div class="nav-icon" onclick="toggleNav()">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+
+        <!-- Hidden Navigation Menu -->
+        <nav id="hiddenNav" class="hidden-navigation">
+            <ul>
+                <button class="course-button">
+                    <a href="career.php?path=10th-pass">10TH PASS</a>
+                </button><br>
+                <button class="course-button">
+                    <a href="career.php?path=12th-pass">12TH PASS</a>
+                </button><br>
+                <button class="course-button">
+                    <a href="career.php?path=post-graduation">Post Graduation</a>
+                </button><br>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Introduction Section -->
+    <section>
+        <h2>Welcome to Your Career Journey</h2>
+        <p style="text-align: center; color: #555;">
+            Discover the best career paths for your skills and interests. Whether you're a student, a job-seeker, or looking to change fields, our guidance will help you make informed decisions.
+        </p>
+    </section>
+
+    <!-- Career Options Section -->
+    <section>
+        <h3>Explore Career Options:</h3>
+        <div style="text-align: center;">
+            <button class="course-button">
+                <a href="career.php?path=10th-pass">10TH PASS</a>
+            </button><br>
+            <button class="course-button">
+                <a href="career.php?path=12th-pass">12TH PASS</a>
+            </button><br>
+            <button class="course-button">
+                <a href="career.php?path=post-graduation">Post Graduation</a>
+            </button><br>
+            
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        
+        <p style="margin: 5px 0;">Connect with us on LinkedIn:</p>
+        <ul style="list-style: none; padding: 0; margin: 0; text-align: center;">
+            <li style="margin: 5px 0;">
+                <a href="https://www.linkedin.com/in/sakshi-chavan-19659a2b3" target="_blank" style="color: white; text-decoration: none;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" style="width: 20px; vertical-align: middle; margin-right: 5px;">
+                    sakshichavan176
+                </a>
+            </li>
+            <li style="margin: 5px 0;">
+                <a href="https://www.linkedin.com/in/sarita-parte-711455291" target="_blank" style="color: white; text-decoration: none;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" style="width: 20px; vertical-align: middle; margin-right: 5px;">
+                    saritaparte74114
+                </a>
+            </li>
+            <li style="margin: 5px 0;">
+                <a href="https://www.linkedin.com/in/shraddha-patil-7a57312b4" target="_blank" style="color: white; text-decoration: none;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" style="width: 20px; vertical-align: middle; margin-right: 5px;">
+                    shraddhapatil8485
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <!-- JavaScript for toggling hidden navigation -->
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById("hiddenNav");
+            nav.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

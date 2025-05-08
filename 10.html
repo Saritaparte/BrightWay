@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightWay - Stream Selection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #f4f4f9, #e1e1e1);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .nav-icon {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .hidden-navigation {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            background-color: rgba(106, 184, 214, 0.9);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .hidden-navigation.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hidden-navigation ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hidden-navigation ul li {
+            margin: 10px 0;
+            transition: transform 0.2s ease;
+        }
+
+        .hidden-navigation ul li:hover {
+            transform: translateX(5px);
+        }
+
+        .hidden-navigation ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hidden-navigation ul li a:hover {
+            background-color: #34c6eb;
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #6a1b9a;
+            margin: 20px 0;
+        }
+
+        section {
+            margin: 20px auto;
+            width: 80%;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .stream-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px; /* Gap between columns */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+
+        .stream-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width for columns */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .science, .commerce, .arts, .other {
+            /* All streams will now have the same background and border-left color */
+            background-color: #e7e1fe;
+            border-left-color: #8a03b3;
+        }
+
+        .stream-column:hover {
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        label {
+            font-size: 16px;
+            margin: 10px 0;
+            display: block;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+            background-color: #fff;
+        }
+
+        select:hover {
+            border-color: #34c6eb;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #34c6eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: block;  /* Ensure it's treated as a block-level element */
+            margin: 20px auto;  /* This centers the button horizontally */
+        }
+
+        .submit-button:hover {
+            background-color: #29a5d5;
+            transform: translateY(-2px);
+        }
+
+        .recommendation {
+            background-color: #e0f7fa;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .college-list {
+            list-style-type: none;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        .college-list li {
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #e2d3fb;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .college-list li:hover {
+            background-color: #d19def;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #2e2e2e;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #d169f0, #c893d1);">
+    
+    <header>
+        <h1>10TH PASS</h1>
+        <p>Your Guide to a Bright Future</p>
+        <div class="nav-icon" onclick="toggleNav()">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+
+        <nav id="hiddenNav" class="hidden-navigation">
+            <ul>
+                <li ><a href="career.php?path=home-pass">Home</a></li>
+                <li><a href="career.php?path=10th-pass">10TH PASS</a></li>
+                <li><a href="career.php?path=12th-pass">12TH PASS</a></li>
+                <li><a href="career.php?path=post-graduation">Post Graduation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Select Your Stream</h2>
+        <form id="streamForm">
+            <div class="stream-container">
+                <div class="stream-column science">
+                    <label for="science">Science Stream:</label>
+                    <select id="science" name="stream_science">
+                        <option value="none">-- Select --</option>
+                        <option value="PCM">PCM (Physics, Chemistry, Mathematics)</option>
+                        <option value="PCB">PCB (Physics, Chemistry, Biology)</option>
+                        <option value="PCMB">PCMB (Physics, Chemistry, Maths, Biology)</option>
+                    </select>
+                </div>
+
+                <div class="stream-column commerce">
+                    <label for="commerce">Commerce Stream:</label>
+                    <select id="commerce" name="stream_commerce">
+                        <option value="none">-- Select --</option>
+                        <option value="Accountancy">Accountancy</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Business Studies">Business Studies</option>
+                    </select>
+                </div>
+
+                <div class="stream-column arts">
+                    <label for="arts">Arts Stream:</label>
+                    <select id="arts" name="stream_arts">
+                        <option value="none">-- Select --</option>
+                        <option value="History">History</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Sociology">Sociology</option>
+                    </select>
+                </div>
+
+                <div class="stream-column other">
+                    <label for="other">Other Courses:</label>
+                    <select id="other" name="stream_other">
+                        <option value="none">-- Select --</option>
+                        <option value="ITI">ITI</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="D.Ed">D.Ed</option>
+                        <option value="TCI">TCI</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="submit-button" onclick="showRecommendation()">Get Recommendation</button>
+        </form>
+
+        <div id="recommendation" class="recommendation" style="display:none;">
+            <h3>Your Recommended Colleges:</h3>
+            <ul id="collegeList" class="college-list"></ul>
+            <p id="recommendationMessage"></p>
+        </div>
+    </section>
+
+    
+    <script>
+        function toggleNav() {
+            var nav = document.getElementById("hiddenNav");
+            nav.classList.toggle("active");
+        }
+
+        function showRecommendation() {
+            const science = document.getElementById("science").value;
+            const commerce = document.getElementById("commerce").value;
+            const arts = document.getElementById("arts").value;
+            const other = document.getElementById("other").value;
+            const collegeList = document.getElementById("collegeList");
+            const recommendationMessage = document.getElementById("recommendationMessage");
+            const recommendationDiv = document.getElementById("recommendation");
+
+            // College data with detailed information
+            const collegeData = {
+                "The new college kolhapur": {
+                    location: " M6R9+2JR, 1062, near Sardar Talim, Shivaji Peth A Ward, C Ward, Kolhapur, Maharashtra 416012",
+                    email: "newcollege1971@gmail.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A+",
+                    meritList: "Available on university website",
+                    phone: "0231-2652645",
+                    divisions:"5",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,IT,Sanskrit,CS,Hindi)"
+                },
+                "Gopal Krishna ghokhale college kolhapur": {
+                    location: "M6RJ+RM2, Subhash Rd, Mangalwar Peth, Shivaji Udyam Nagar, Kolhapur, Maharashtra 416012",
+                    email: "gkgcollege1950@gmail.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "B",
+                    meritList: "Available on the college website; based on SSC or CBSE scores",
+                    phone: "+91-231-2545065​",
+                    divisions:"4",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,IT)"
+                },
+                "Vivekanand College of Kolhapur": {
+                    location: "Location=2130, E Ward, Tarabai Park, Kolhapur, Maharashtra 416003",
+                    email: "info@vivekanandcollege.org",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on SSC or CBSE scores",
+                    phone: "+91-231-2658612",
+                    divisions:"5",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,IT,Sanskrit,CS,Hindi)"
+                },
+                "SM Lohiya junior college kolhapur": {
+                    location: "Mangalwar Peth, C Ward, Kolhapur, Maharashtra 416012",
+                    email: "neskop1921@gmail.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "-",
+                    meritList: "Available on the college website; based on SSC or CBSE scores",
+                    phone: "0231-2625228",
+                    divisions:"4",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,Hindi)"
+                },
+                "Kamala college kolhapur": {
+                    location: "Rajaram Rd, Poorvarang, Mahalaxminagar, Rajarampuri, Kolhapur, Maharashtra 416001",
+                    email: "prinkck@rediffmail.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A",
+                    meritList: "Available on the college website; based on SSC or CBSE scores",
+                    phone: "+91 (0231) 2522216",
+                    divisions:"5",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,Hindi)"
+                },
+                "Rajashri Chhatrapati shahu college kolhapur": {
+                    location: "Dasara Chowk, Bhausingji Road, Kolhapur ",
+                    email: "rcsmlib@yahoo.in",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "-",
+                    meritList: "Available on the college website; based on SSC or CBSE scores",
+                    phone: "+91 (0231) 2654658​",
+                    divisions:"4",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi,Hindi)"
+                },
+                "Rajaram college  kolhapur": {
+                    location: "Vidyanagar, Kolhapur - 416004",
+                    email: "rajaramcollege@gmail.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A",
+                    meritList: "Available on the college website, based on SSC or CBSE scores",
+                    phone: "+91 (0231) 253784",
+                    divisions:"3",
+                    intake:"PCM=70,PCB=70,PCMB=70,PCMB(Marathi)"
+                },
+            "D.R.K. College Of Commerce":{
+                    location: "Kolhapur, Maharashtra",
+                    email:  "info@drkcollegekolhapur.org" ,
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "B",
+                    meritlist: "Available on the college website, based on SSC or CBSE scores",
+                    phone: "+91-123-4567890",
+                    divisions:"3",
+                    intake:"130"
+                },
+                "Bhogawati Mahavidyalaya, Kurukali":{
+                    location: "Kurukali, Maharashtra",
+                    email: "contact@bhogawatimv.com",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "C+",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-123-6547890" ,
+                    divisions:"1",
+                    intake:"80"
+                },
+                "Ajara Mahavidyalaya Kolhapur":{
+                    location: "Ajara, Kolhapur, Maharashtra",
+                    email: "ajaramv@kolhapur.edu",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "B+",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-987-6543210" ,
+                    divisions:"1",
+                    intake:"60"
+                },
+            "D. D. Shinde Sarkar College, Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@ddshindesarkar.edu",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-765-4321098" ,
+                    divisions:"1",
+                    intake:"70"
+                },
+            "The New College Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "admissions@newcollegekolhapur.edu",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A+",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-987-6543210" ,
+                    divisions:"2",
+                    intake: "80"
+                },
+            "Mahavir Mahavidyalaya, Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "mahavircollege@kolhapur.edu",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "B",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-765-4321098" ,
+                    divisions:"2",
+                    intake:"100"
+                },
+            "Vivekanand College of Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "vivekanandacollege@kolhapur.edu",
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "A",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-123-9876543" ,
+                    divisions:"3",
+                    intake: "125"
+                },
+                "Night College Of Arts And Commerce":{
+                    location: "Kolhapur, Maharashtra" ,
+                    email: "nightcollege@kolhapur.edu" ,
+                    tuitionFee: "Based on your merit",
+                    naacGrade: "C",
+                    meritlist: "Available on the college website,based on SSC or CBSE scores",
+                    phone: "+91-987-1234567" ,
+                    divisions:"3",
+                    intake:"120"
+                },
+                "Government Industrial Training Institute Kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "example@giitkolhapur.edu.in",
+                    tuitionFee: "₹5000 per year",
+                    naacGrade: "B",
+                    meritlist: "Available at institute notice board",
+                    phone: "+91-123-4567890",
+                    divisions:"3",
+                    intake:"ELECTRION TRADE= 120,MECHENIST TRADE=60,PLUMBING TRADE=40"
+                },
+                "Y.D. Mane Institute of Technology Pvt ITI Kagal":{
+                    location: "Kagal, Kolhapur, Maharashtra",
+                    email: "info@ydmaneiti.edu.in",
+                    tuitionFee: "₹6000 per year",
+                    naacGrade: "C",
+                    meritlist: "Available online on the official website",
+                    phone: "+91-234-5678901",
+                    divisions:"3",
+                    intake:"ELECTRION TRADE= 50,MECHENIST TRADE=30,PLUMBING TRADE=40"
+                },
+                "Industrial Training Institute Gadhindglaj, Kolhapur":{
+                    location: "Gadhindglaj, Kolhapur, Maharashtra",
+                    email: "contact@iti-gadhindglaj.edu.in",
+                    tuitionFee: "₹4500 per year",
+                    naacGrade: "B+",
+                    meritlist: "Available at the local office",
+                    phone: "+91-345-6789012",
+                    divisions:"3",
+                    intake:"ELECTRION TRADE= 40,MECHENIST TRADE=60,PLUMBING TRADE=40"
+                },
+                "Government industrial training institute kolhapur":{
+                    location: "Gargoti, Kolhapur, Maharashtra",
+                    email: "admissions@gii-gargoti.edu.in",
+                    tuitionFee: "₹5500 per year",
+                    naacGrade: "A",
+                    meritlist: "Available on the official portal",
+                    phone: "+91-456-7890123",
+                    divisions:"3",
+                    intake:"ELECTRION TRADE= 120,MECHENIST TRADE=60,PLUMBING TRADE=40"
+                },
+                "Y.D.Mane institute of Technology pvt ITI kagal": {
+                location: "Kagal, Kolhapur, Maharashtra",
+                email: "admissions@ydmaneiti.edu.in",
+                tuitionFee: "₹4500 per year",
+                naacGrade: "B",
+                meritlist: "Available on the official portal",
+                phone: "+91-987-6543210",
+                divisions: "2",
+                intake: "ELECTRICAL TRADE= 80, FITTER TRADE= 60"
+                },
+                "Industrial training institute Gadhindglaj, kolhapur": {
+                location: "Gadhinglaj, Kolhapur, Maharashtra",
+                email: "info@itigadhinglaj.edu.in",
+                tuitionFee: "₹5000 per year",
+                naacGrade: "A",
+                meritlist: "Published on the official website",
+                phone: "+91-876-5432109",
+                divisions: "4",
+                intake: "WELDER TRADE= 100, TURNER TRADE= 50, PLUMBING TRADE= 40, CARPENTER TRADE= 30"
+                },
+                "Government Industrial Training Institute at Gargoti, Kolhapur": {
+                    location: "Gargoti, Kolhapur, Maharashtra",
+                    email: "admissions@gii-gargoti.edu.in",
+                    tuitionFee: "₹5500 per year",
+                    naacGrade: "A",
+                    meritlist: "Available on the official portal",
+                    phone: "+91-456-7890123",
+                    divisions: "3",
+                    intake: "ELECTRICIAN TRADE= 120, MACHINIST TRADE= 60, PLUMBING TRADE= 40"
+                },
+
+                "Dr.AD shinde Institute of technology kolhapur": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@adshindeit.edu.in",
+                    tuitionFee: "₹70,000 per year",
+                    naacGrade: "B+",
+                    meritlist: "Available on the official website",
+                    phone: "+91-123-4567890",
+                    divisions:"3",
+                    intake:"CS= 120,Civil=40,Electrical=50,Mechanical=50"
+                },
+                "Dr. D.Y.Patil college of polytechnic kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "admissions@dypatilpolytech.edu.in",
+                    tuitionFee: "₹65,000 per year",
+                    naacGrade: "A",
+                    meritlist: "Displayed on the college notice board",
+                    phone: "+91-234-5678901",
+                    divisions:"3",
+                    intake:"CS= 120,Civil=40,Electrical=50,Mechanical=50"
+                },
+                "Government polytechnic, kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "admissions@gpkolhapur.edu.in",
+                    tuitionFee: "₹40,000 per year",
+                    naacGrade: "B",
+                    meritlist: "Available on the college website",
+                    phone: "+91-345-6789012",
+                    divisions:"3",
+                    intake:"CS= 120,Civil=40,Electrical=50,Mechanical=50"
+                },
+                "Sanjeevan Engineering and technology Institute panhala,kolhapur":{
+                    location: "Panhala, Kolhapur, Maharashtra",
+                    email: "info@setipanhala.edu.in",
+                    tuitionFee: "₹55,000 per year",
+                    naacGrade: "B",
+                    meritlist: "Available in the administrative office",
+                    phone: "+91-456-7890123",
+                    divisions:"3",
+                    intake:"CS= 120,Civil=40,Electrical=50,Mechanical=50"
+                },
+                "Dr.Bapuji Salunkhe Institute of Engineering and technology Institute,kolhapur":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "admissions@bsietkolhapur.edu.in",
+                    tuitionFee: "₹80,000 per year",
+                    naacGrade: "A",
+                    meritlist: "Published on the official website and campus",
+                    phone: "+91-567-8901234",
+                    divisions:"3",
+                    intake:"CS= 120,Civil=40,Electrical=50,Mechanical=50"
+                },
+                "Maharani Shantadevi Gaikwad Grihashtra Adhyapika Vidyalaya": {
+                    location: "Kolhapur, Maharashtra",
+                    email: "info@msggaikwadvidyalaya.edu.in",
+                    tuitionFee: "₹25,000 per year",
+                    naacGrade: "B",
+                    meritlist: "Available at the college office",
+                    phone: "+91-123-4567890" ,
+                    divisions:"1",
+                    intake:"60"
+                },
+                "Junior College of Education":{
+                    location: "Kolhapur, Maharashtra",
+                    email: "contact@jcekolhapur.edu.in",
+                    tuitionFee: "₹20,000 per year",
+                    naacGrade: "C+",
+                    meritlist: "Posted on the notice board",
+                    phone: "+91-234-5678901",
+                    divisions:"1",
+                    intake:"50"
+                },
+
+            "Balasaheb Mane Education Trust Sanchalit Adhyapak Vidyalaya": {location: "Kolhapur, Maharashtra",
+                email: "info@bmetavidyalaya.edu.in",
+                tuitionFee: "₹18,000 per year",
+                naacGrade: "B+",
+                meritlist: "Available on the official website",
+                phone: "+91-345-6789012",
+                divisions:"1",
+                intake:"60"
+            },
+            "KLE Society's Adyapak Vidyalaya - D.Ed. College": {location: "Kolhapur, Maharashtra",
+                email: "admissions@kleavyak.edu.in",
+                tuitionFee: "₹30,000 per year",
+                naacGrade: "A",
+                meritlist: "Published on the college website and notice board",
+                phone: "+91-456-7890123",
+                divisions:"1",
+                intake:"50"
+            },
+            "Shri S.K. Patil D.Ed. College": {
+                location: "Kolhapur, Maharashtra",
+                email: "admissions@kleavyak.edu.in",
+                tuitionFee: "₹30,000 per year",
+                naacGrade: "A",
+                meritlist: "Published on the college website and notice board",
+                phone: "+91-456-7890123",
+                divisions:"1",
+                intake:"50"
+                }
+
+                // Add more colleges with similar structure
+            };
+
+           // Clear previous recommendations
+            let colleges = [];
+            let message = "";
+             // Clear previous results
+            collegeList.innerHTML = "";
+            recommendationMessage.innerHTML = "";
+
+            if (science !== "none") {
+                colleges = ["The new college kolhapur", "Gopal Krishna ghokhale college kolhapur", "Vivekanand College of Kolhapur", "SM Lohiya junior college kolhapur","Kamala college kolhapur","Rajashri Chhatrapati shahu college kolhapur","Rajaram college  kolhapur"];
+                message = "The Science stream provides vast opportunities in engineering, research, and medicine. Consider these top institutions.";
+            } else if (commerce !== "none") {
+                colleges = ["D.R.K. College Of Commerce", "Bhogawati Mahavidyalaya, Kurukali", "Ajara Mahavidyalaya Kolhapur", "D. D. Shinde Sarkar College, Kolhapur", "The New College Kolhapur", "Mahavir Mahavidyalaya, Kolhapur", "Vivekananda College kolhapur","Night College Of Arts And Commerce"];
+                message = "Commerce opens doors to careers in finance, management, and entrepreneurship. Here are the recommended colleges.";
+            } else if (arts !== "none") {
+                colleges = ["The new college kolhapur", "Gopal Krishna ghokhale college kolhapur", "Vivekanand College of Kolhapur", "SM Lohiya junior college kolhapur","Kamala college kolhapur","Rajashri Chhatrapati shahu college kolhapur","Mahavir Mahavidhyalaya kolhapur","Rajaram college  kolhapur"];
+                message = "The Arts stream fosters creativity and critical thinking. These institutions are renowned for their arts programs.";
+            } else if (other !== "none") {
+                if (other === "ITI") {
+                    colleges = ["Government industrial training institute kolhapur", "Y.D.Mane institute of Technology pvt ITI kagal", "Industrial training institute Gadhindglaj, kolhapur", "Government Industrial Training Institute at Gargoti, Kolhapur"];
+                    message = "These institutions specialize in ITI courses offering practical skills for various trades.";
+                } else if (other === "Diploma") {
+                    colleges = ["Dr.AD shinde Institute of technology kolhapur", "Dr. D.Y.Patil college of polytechnic kolhapur", "Government polytechnic, kolhapur", "Sanjeevan Engineering and technology Institute panhala,kolhapur","Dr.Bapuji Salunkhe Institute of Engineering and technology Institute,kolhapur"];
+                    message = "These colleges provide diploma courses in engineering and other technical fields.";
+                } else if (other === "D.Ed") {
+                    colleges = ["Maharani Shantadevi Gaikwad Grihashtra Adhyapika Vidyalaya", "Junior College of Education", "Balasaheb Mane Education Trust Sanchalit Adhyapak Vidyalaya","KLE Society's Adyapak Vidyalaya - D.Ed. College","Shri S.K. Patil D.Ed. College"];
+                    message = "These institutions focus on diploma in education, preparing students for teaching careers.";
+                }
+            }
+
+            if (colleges.length > 0) {
+                colleges.forEach(function (collegeName) {
+                    const li = document.createElement("li");
+                    li.textContent = collegeName;
+
+                    // Create a div for the college information popup
+                    const infoPopup = document.createElement("div");
+                    infoPopup.classList.add("college-info-popup");
+
+                    // Check if college has detailed data
+                    if (collegeData[collegeName]) {
+                        const details = collegeData[collegeName];
+                        infoPopup.innerHTML = `
+                            <strong>Location:</strong> ${details.location}<br>
+                            <strong>Email:</strong> <a href="mailto:${details.email}">${details.email}</a><br>
+                            <strong>Tuition Fee:</strong> ${details.tuitionFee}<br>
+                            <strong>NAAC Grade:</strong> ${details.naacGrade}<br>
+                            <strong>Merit List:</strong> ${details.meritList}<br>
+                            <strong>Phone:</strong> <a href="tel:${details.phone}">${details.phone}</a><br>
+                            <strong>Divisions:</strong> ${details.divisions}<br>
+                            <strong>Intake:</strong> ${details.intake}<br>
+                        `;
+                    } else {
+                        infoPopup.textContent = "Information not available";
+                    }
+
+                    // Toggle visibility of information popup on click
+                    li.onclick = function () {
+                        infoPopup.style.display = infoPopup.style.display === "none" ? "block" : "none";
+                    };
+
+                    // Append info popup to the list item and add to the list
+                    li.appendChild(infoPopup);
+                    collegeList.appendChild(li);
+                });
+                recommendationMessage.textContent = message;
+                recommendationDiv.style.display = "block";
+            } else {
+                recommendationDiv.style.display = "none";
+            }
+        }
+    </script>
+    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #101292;">
+        <strong>Note:</strong>
+        First, click on 'Select' before proceeding to the next stream.<br><br><br>
+    </div>
+</body>
+</html>

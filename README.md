@@ -12,4 +12,4 @@ git push origin main
 
 Here is a snapshot of my project:
 
-![Project Snapshot](login.png)
+![Project Snapshot]("C:\Users\HP\Pictures\Screenshots\login.png")

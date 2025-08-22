@@ -12,4 +12,4 @@ git push origin main
 
 Here is a snapshot of my project:
 
-![Project Snapshot](images/snapshot.png)
+![Project Snapshot](login.png)
